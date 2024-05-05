@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "gcip-iap": "^2.0.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "build": "webpack",
+    "deploy": "firebase deploy --only hosting"
+  }
+}
