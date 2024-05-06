@@ -1,10 +1,12 @@
-  // Import Firebase modules.
-  import { initializeApp } from 'firebase/app';
-  import { getAuth, SAMLAuthProvider, signInWithRedirect, User, UserCredential, Auth } from 'firebase/auth';
-  // Import the gcip-iap module.
-  import * as ciap from 'gcip-iap';
-  import { firebaseConfig, tenantId, providerId } from './config';
+// Import Firebase modules.
+import { initializeApp } from 'firebase/app';
+import { getAuth, SAMLAuthProvider, signInWithRedirect, User, UserCredential, Auth } from 'firebase/auth';
+// Import the gcip-iap module.
+import * as ciap from 'gcip-iap';
+// Import the configuration
+import { firebaseConfig, tenantId, providerId } from './config';
 
+// Type definitions for gcip-iap
 interface SelectedTenantInfo {
   email?: string;
   tenantId: string | null;
@@ -28,6 +30,7 @@ interface AuthenticationHandler {
   handleError?(error: Error | ciap.CIAPError): void;
 }
 
+// Implementation of AuthenticationHandler
 const authHandlerSAML: AuthenticationHandler = {
    selectTenant: function (_projectConfig: ProjectConfig, _tenantIds: string[]): Promise<SelectedTenantInfo> {
     return new Promise((resolve, _reject) => {
@@ -41,7 +44,6 @@ const authHandlerSAML: AuthenticationHandler = {
   getAuth: function (_apiKey: string, tenantId: string | null): Auth {
     const app = initializeApp(firebaseConfig, tenantId || '[DEFAULT]');
     let auth = getAuth(app);
-    // Set the tenant ID on the Auth instance.
     auth.tenantId = tenantId;
     return auth;
   },
@@ -60,5 +62,6 @@ const authHandlerSAML: AuthenticationHandler = {
   }
 }
 
+// Pass the implementation to Authentication constructor and start
 const ciapInstance = new ciap.Authentication(authHandlerSAML);
 ciapInstance.start();
