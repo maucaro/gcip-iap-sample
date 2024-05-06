@@ -1,7 +1,7 @@
 # IAP Federated Custom Login Sample
 
 This is a sample login page that, when hosted, can be used as the Authentication URL for a backend service configured to use IAP with Identity Platform. 
-This sample has no UI and is meant to be used in cases where only a single tenant and federated identity provider need to be supported.
+This sample has no UI and is meant to be used in cases where only a single tenant and federated identity provider are required.
 
 [Reference](https://cloud.google.com/iap/docs/create-custom-auth-ui)
 
