@@ -1,9 +1,9 @@
   // Import Firebase modules.
-  import { initializeApp, getApp } from 'firebase/app';
+  import { initializeApp } from 'firebase/app';
   import { getAuth, SAMLAuthProvider, signInWithRedirect, User, UserCredential, Auth } from 'firebase/auth';
   // Import the gcip-iap module.
   import * as ciap from 'gcip-iap';
-  import { firebaseConfig } from './config';
+  import { firebaseConfig, tenantId, providerId } from './config';
 
 interface SelectedTenantInfo {
   email?: string;
@@ -30,10 +30,10 @@ interface AuthenticationHandler {
 
 const authHandlerSAML: AuthenticationHandler = {
    selectTenant: function (_projectConfig: ProjectConfig, _tenantIds: string[]): Promise<SelectedTenantInfo> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       resolve({
-        tenantId: null,
-        providerIds: ["saml.entra"]
+        tenantId: tenantId,
+        providerIds: [providerId]
       });
     });
   },
@@ -42,13 +42,13 @@ const authHandlerSAML: AuthenticationHandler = {
     const app = initializeApp(firebaseConfig, tenantId || '[DEFAULT]');
     let auth = getAuth(app);
     // Set the tenant ID on the Auth instance.
-    auth.tenantId = null;
+    auth.tenantId = tenantId;
     return auth;
   },
 
   startSignIn: function (auth: Auth, _selectedTenantInfo: SelectedTenantInfo) {
     return new Promise(() => {
-      const provider = new SAMLAuthProvider('saml.entra');
+      const provider = new SAMLAuthProvider(providerId);
       signInWithRedirect(auth, provider);
     });
   },

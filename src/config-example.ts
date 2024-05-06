@@ -7,3 +7,5 @@ export const firebaseConfig = {
   messagingSenderId: "706xxx",
   appId: "1:706xxx:web:dd3xxx"
 };
+export const tenantId: string = null;
+export const providerId: string = "saml.demo";
