@@ -2,6 +2,9 @@
 config.ts 
 bundle*
 
+#.DS_Store (macOS)
+.DS_Store
+
 # Logs
 logs
 *.log
